@@ -13,24 +13,38 @@ services:
       mode: replicated
       replicas: 1
 
+  
+  authentication-service:
+    build: 
+      context: ./../authentication-service
+      dockerfile: ./../authentication-service/authentication-service.dockerfile
+    restart: always
+    ports:
+      - "8081:90"
+    deploy:
+      mode: replicated
+      replicas: 1
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 123456
+      MYSQL_DB: authentication_service_golang
 
-  db:
-    image: mysql:8.0
-    # cap_add:
-    #   - SYS_NICE
 
+  mysql:
+    image: mysql:5.7
     deploy:
       mode: replicated
       replicas: 1
     restart: always
     environment:
-      - MYSQL_DATABASE=root
-      - MYSQL_ROOT_PASSWORD=123456
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: authentication_service_golang
     ports:
       - '3306:3306'
     volumes:
-      - db:/var/lib/mysql
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - mysqldb:/var/lib/mysql
+      # - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
 
 #   mongo:
 #     image: 'mongo:4.2.17-bionic'
@@ -64,5 +78,4 @@ services:
 #       - ./db-data/postgres/:/var/lib/postgresql/data/
 
 volumes:
-  db:
-    driver: local
+  mysqldb:
