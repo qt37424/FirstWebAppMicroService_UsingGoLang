@@ -1,6 +1,7 @@
 # ALL OF THING NOTE
 
-# In section 1 video 5: 
+# In section 1 
+## Video 5: 
 - The mentor suggest install Make but I haven't installed it cause I think it's not necessary right now. In the future if u want to install let's following to this guide in this video
 
 # In section 2:
@@ -23,3 +24,7 @@
 - When running Makefile, it not only run Makefile but also run Docker file
 - When running a Makefile, make sure you have a TAB character at the front of the line.
 Example: Makefile in project folder 
+
+# In section 3:
+## In no video:
+- In my opinion, docker is an application using Virtual Ubuntu (or maybe real ubuntu if you install docker in ubuntu OS) so when run docker-compose, all of the service will be depend on the application is install in the virtual Docker machine, so if run a images related to MySQL, if you are not installed Docker MySQL, you can't run this images. => So, I want to try connecting my MySQL in my Windows OS through the docker. If you know how to do it, please help me by contact to [Linkedin](https://www.linkedin.com/in/wangmapne) account

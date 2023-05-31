@@ -48,9 +48,25 @@ func main() {
 	// ending for set up config
 }
 
+// For the other DB like PostGre
 func openDB(dsn string) (*sql.DB, error) {
 	// db, err := sql.Open("pgx", dsn) // That is used for connecting with Postgresql
 	db, err := sql.Open("mysql", dsn)
+	if err != nil {
+		return nil, err
+	}
+
+	err = db.Ping()
+	if err != nil {
+		return nil, err
+	}
+
+	return db, nil
+}
+
+func openDBofMySQL() (*sql.DB, error) {
+	// db, err := sql.Open("pgx", dsn) // That is used for connecting with Postgresql
+	db, err := sql.Open("mysql", "root:123456@tcp(127.0.0.1:3306)/authentication_service_golang") // Find a way to pass this to docker-compose
 	if err != nil {
 		return nil, err
 	}
@@ -69,10 +85,16 @@ func connectToDB() *sql.DB {
 	for {
 		connection, err := openDB(dsn)
 		if err != nil {
-			log.Println("Database not yet already ...")
-			counts++
+			connection1, err1 := openDBofMySQL()
+			if err1 != nil {
+				log.Println("Database not yet already ...")
+				counts++
+			} else {
+				log.Println("Connected to Database")
+				return connection1
+			}
 		} else {
-			log.Println("Connected to Database")
+			log.Println("Connected to Database different with Mysql")
 			return connection
 		}
 
