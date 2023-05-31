@@ -27,4 +27,4 @@ Example: Makefile in project folder
 
 # In section 3:
 ## In no video:
-- In my opinion, docker is an application using Virtual Ubuntu (or maybe real ubuntu if you install docker in ubuntu OS) so when run docker-compose, all of the service will be depend on the application is install in the virtual Docker machine, so if run a images related to MySQL, if you are not installed Docker MySQL, you can't run this images. => So, I want to try connecting my MySQL in my Windows OS through the docker. If you know how to do it, please help me by contact to [Linkedin](https://www.linkedin.com/in/wangmapne) account
+- In my opinion, docker is an application using Virtual Ubuntu (or maybe real ubuntu if you install docker in ubuntu OS) so when run docker-compose, all of the service will be depend on the application is install in the virtual Docker machine, so if run a images related to MySQL, if you are not installed Docker MySQL, you can't run this images. => I try it again, and I realize
