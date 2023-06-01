@@ -50,7 +50,7 @@ func main() {
 
 // For the other DB like PostGre
 func openDB(dsn string) (*sql.DB, error) {
-	// db, err := sql.Open("pgx", dsn) // That is used for connecting with Postgresql
+	// db, err := sql.Open("pgx", dsn) // That is used for connecting with Postgresql, through comment if you add package for connecting to PostgreSQL
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		return nil, err
@@ -65,8 +65,14 @@ func openDB(dsn string) (*sql.DB, error) {
 }
 
 func openDBofMySQL() (*sql.DB, error) {
-	// db, err := sql.Open("pgx", dsn) // That is used for connecting with Postgresql
-	db, err := sql.Open("mysql", "root:123456@tcp(127.0.0.1:3306)/authentication_service_golang") // Find a way to pass this to docker-compose
+	var db *sql.DB
+	var err error
+	// db, err := sql.Open("mysql", "root:123456@tcp(host.docker.internal:3306)/authentication_service_golang")
+	if !isRunningInContainer() {
+		db, err = sql.Open("mysql", "root:123456@tcp(127.0.0.1:3306)/authentication_service_golang") // Find a way to pass this to docker-compose
+	} else {
+		db, err = sql.Open("mysql", "root:123456@tcp(host.docker.internal:3306)/authentication_service_golang") // Find a way to pass this to docker-compose
+	}
 	if err != nil {
 		return nil, err
 	}
@@ -108,4 +114,11 @@ func connectToDB() *sql.DB {
 		time.Sleep(2 * time.Second)
 		continue
 	}
+}
+
+func isRunningInContainer() bool {
+	if _, err := os.Stat("/.dockerenv"); err != nil {
+		return false
+	}
+	return true
 }

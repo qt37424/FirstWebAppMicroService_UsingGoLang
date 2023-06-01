@@ -23,7 +23,7 @@ func (app *Config) routes() http.Handler {
 
 	mux.Use(middleware.Heartbeat("/ping")) // This is a way to make sure that this service is still responding to network requests
 
-	mux.Post("/authentication", app.Authenticate)
+	mux.Post("/authenticate", app.Authenticate)
 
 	return mux
 }

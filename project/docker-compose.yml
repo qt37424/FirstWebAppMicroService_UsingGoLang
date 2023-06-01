@@ -20,7 +20,7 @@ services:
       dockerfile: ./../authentication-service/authentication-service.dockerfile
     restart: always
     ports:
-      - "8081:90"
+      - "8081:85"
     deploy:
       mode: replicated
       replicas: 1
