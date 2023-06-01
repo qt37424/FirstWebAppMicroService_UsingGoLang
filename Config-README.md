@@ -26,7 +26,7 @@ docker images
 
 Step 3: Run MySQL Image in a Container
 ```
-docker run -d --name mySql-cont -e MYSQL_ROOT_PASSWORD=Pass123 mysql:5.7
+docker run -d --name mySql-cont -e MYSQL_ROOT_PASSWORD=<password> mysql:5.7
 ```
 
 Step 4: Verification
@@ -36,3 +36,8 @@ ps -a
 
 Step 5: (if you've install mysql before)
 Change the port in docker-compose.yml into 3307:3306 to avoid the same port when running
+
+# Execute sql file into MySQL server
+```
+mysql -u root -p{your_password} < {path_to_your_sqlfile}
+```
