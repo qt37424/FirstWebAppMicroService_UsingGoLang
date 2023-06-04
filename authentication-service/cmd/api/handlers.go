@@ -9,7 +9,7 @@ import (
 func (app *Config) Authenticate(w http.ResponseWriter, r *http.Request) {
 	var requestPayload struct {
 		Email    string `json:"email"`
-		Password string `string:"password"`
+		Password string `json:"password"`
 	}
 
 	err := app.readJSON(w, r, &requestPayload)
@@ -31,11 +31,13 @@ func (app *Config) Authenticate(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	payload := JsonRespone{
+	payload := jsonResponse{
 		Error:   false,
 		Message: fmt.Sprintf("Logged in user %s", user.Email),
 		Data:    user,
 	}
+
+	fmt.Print(payload)
 
 	app.writeJSON(w, http.StatusAccepted, payload)
 }

@@ -39,32 +39,12 @@
         let sent = document.getElementById("payload");
         let received = document.getElementById("received");
 
-        brokerBtn.addEventListener("click", function() {
-            const body = {
-                method: 'POST', 
-            }
-            fetch("http:\/\/localhost:8080", body)
-            .then((response) => response.json())
-            .then((data) => {
-                sent.innerHTML = "empty post request";
-                received.innerHTML = JSON.stringify(data, undefined, 4);
-                if (data.error) {
-                    console.log(data.message);
-                } else {
-                    output.innerHTML += `<br><strong>Response from broker service</strong>: ${data.message}`;
-                }
-            })
-            .catch((error) => {
-                output.innerHTML += "<br><br>Error:" + error;
-            })
-        })
-
         authBrokerBtn.addEventListener("click", function() {
             const payload = {
                 action: "auth",
                 auth: {
                     email: "admin@example.com",
-                    password: "verysecret",
+                    password: "Admin123",
                 }
             }
 
@@ -77,13 +57,35 @@
                 headers: headers,
             }
 
-            fetch("http:\/\/localhost:8080/handle", body)
+            {{/* fetch("http:\/\/localhost:8080/handle", body)   // this is for running with docker */}}
+            fetch("http:\/\/localhost:82/handle", body)   // this is for running by hand
             .then((response) => response.json())
             .then((data) => {
                 sent.innerHTML = JSON.stringify(payload, undefined, 4);
                 received.innerHTML = JSON.stringify(data, undefined, 4);
                 if (data.error) {
                     output.innerHTML += `<br><strong>Error:</strong> ${data.message}`;
+                } else {
+                    output.innerHTML += `<br><strong>Response from broker service</strong>: ${data.message}`;
+                }
+            })
+            .catch((error) => {
+                output.innerHTML += "<br><br>Error:" + error;
+            })
+        })
+
+        brokerBtn.addEventListener("click", function() {
+            const body = {
+                method: 'POST', 
+            }
+            {{/* fetch("http:\/\/localhost:8080", body) // this is for running with docker */}}
+            fetch("http:\/\/localhost:82", body) // this is for running by hand
+            .then((response) => response.json())
+            .then((data) => {
+                sent.innerHTML = "empty post request";
+                received.innerHTML = JSON.stringify(data, undefined, 4);
+                if (data.error) {
+                    console.log(data.message);
                 } else {
                     output.innerHTML += `<br><strong>Response from broker service</strong>: ${data.message}`;
                 }

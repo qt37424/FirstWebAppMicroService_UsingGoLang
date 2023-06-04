@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"log"
 	"net/http"
 )
 
@@ -17,7 +16,7 @@ type RequestPayload struct {
 
 type AuthPayload struct {
 	Email    string `json:"email"`
-	Password string `string:"password"`
+	Password string `json:"password"`
 }
 
 func (app *Config) Broker(w http.ResponseWriter, r *http.Request) {
@@ -34,12 +33,15 @@ func (app *Config) Broker(w http.ResponseWriter, r *http.Request) {
 	// w.Write(out)
 }
 
+// HandleSubmission is the main point of entry into the broker. It accepts a JSON
+// payload and performs an action based on the value of "action" in that JSON.
 func (app *Config) HandleSubmission(w http.ResponseWriter, r *http.Request) {
 	var requestPayload RequestPayload
 
 	err := app.readJSON(w, r, &requestPayload)
 	if err != nil {
 		app.errorJSON(w, err)
+		return
 	}
 
 	switch requestPayload.Action {
@@ -54,7 +56,9 @@ func (app *Config) authenticate(w http.ResponseWriter, a AuthPayload) {
 	// create some json we'll send to the auth microservice
 	jsonData, _ := json.MarshalIndent(a, "", "\t") // return a data is formatted with json type and have the indent with tab
 
-	authServiceURL := fmt.Sprintf("http://%s/authenticate", "authentication-service")
+	// authServiceURL := fmt.Sprintf("http://%s/authenticate", "authentication-service")
+	authServiceURL := fmt.Sprintf("http://%s/authenticate", "localhost:90")
+
 	// now build the request and set header
 	request, err := http.NewRequest("POST", authServiceURL, bytes.NewBuffer(jsonData))
 	// request.Header.Set("Content-Type", "application/json")
@@ -68,10 +72,6 @@ func (app *Config) authenticate(w http.ResponseWriter, a AuthPayload) {
 	response, err := client.Do(request)
 	if err != nil {
 		app.errorJSON(w, err, http.StatusBadRequest)
-		log.Println(err) // Error occurs in here
-		log.Println(jsonData)
-		log.Println(request)
-		log.Println(response)
 		return
 	}
 	defer response.Body.Close() // defer will run after the func ends even with exception
