@@ -56,6 +56,8 @@ func (app *Config) authenticate(w http.ResponseWriter, a AuthPayload) {
 	// create some json we'll send to the auth microservice
 	jsonData, _ := json.MarshalIndent(a, "", "\t") // return a data is formatted with json type and have the indent with tab
 
+	fmt.Println(a)
+
 	// authServiceURL := fmt.Sprintf("http://%s/authenticate", "authentication-service")
 	authServiceURL := fmt.Sprintf("http://%s/authenticate", "localhost:90")
 
