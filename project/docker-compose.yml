@@ -61,21 +61,21 @@ services:
 #     volumes:
 #       - ./db-data/mongo/:/data/db
 
-#   # postgres: start Postgres, and ensure that data is stored to a mounted volume (I didnt install Postgresql in my laptop before)
-#   postgres:
-#     image: 'postgres:14.2'
-#     ports:
-#       - "5432:5432"
-#     restart: always
-#     deploy:
-#       mode: replicated
-#       replicas: 1
-#     environment:
-#       POSTGRES_USER: postgres
-#       POSTGRES_PASSWORD: password
-#       POSTGRES_DB: users
-#     volumes:
-#       - ./db-data/postgres/:/var/lib/postgresql/data/
+  # postgres: start Postgres, and ensure that data is stored to a mounted volume (I didnt install Postgresql in my laptop before)
+  postgres:
+    image: 'postgres:14.2'
+    ports:
+      - "5432:5432"
+    restart: always
+    deploy:
+      mode: replicated
+      replicas: 1
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: users
+    volumes:
+      - ./db-data/postgres/:/var/lib/postgresql/data/
 
 volumes:
   mysqldb:

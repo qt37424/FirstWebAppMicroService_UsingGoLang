@@ -10,6 +10,9 @@ import (
 	"time"
 
 	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/jackc/pgconn"
+	_ "github.com/jackc/pgx/v4"
+	_ "github.com/jackc/pgx/v4/stdlib"
 )
 
 const webPort = "90"
@@ -50,8 +53,8 @@ func main() {
 
 // For the other DB like PostGre
 func openDB(dsn string) (*sql.DB, error) {
-	// db, err := sql.Open("pgx", dsn) // That is used for connecting with Postgresql, through comment if you add package for connecting to PostgreSQL
-	db, err := sql.Open("mysql", dsn)
+	db, err := sql.Open("pgx", dsn) // That is used for connecting with Postgresql, through comment if you add package for connecting to PostgreSQL
+
 	if err != nil {
 		return nil, err
 	}
@@ -67,7 +70,6 @@ func openDB(dsn string) (*sql.DB, error) {
 func openDBofMySQL() (*sql.DB, error) {
 	var db *sql.DB
 	var err error
-	// db, err := sql.Open("mysql", "root:123456@tcp(host.docker.internal:3306)/authentication_service_golang")
 	if !isRunningInContainer() {
 		db, err = sql.Open("mysql", "root:123456@tcp(127.0.0.1:3306)/authentication_service_golang") // Find a way to pass this to docker-compose
 	} else {
