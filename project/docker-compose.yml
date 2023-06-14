@@ -63,7 +63,7 @@ services:
 
   # postgres: start Postgres, and ensure that data is stored to a mounted volume (I didnt install Postgresql in my laptop before)
   postgres:
-    image: 'postgres:14.2'
+    image: 'postgres:15.3'
     ports:
       - "5432:5432"
     restart: always

@@ -62,3 +62,8 @@ Don't worry, just connect your PC with the internet and build it again
 `netstat -ano|findstr "PID :{portNumber}"`
 + Second, use this command to kill PID is using port you want to shutdown: 
 `taskkill /pid {PIDNumber} /f`
+
+
+***
+# UI of pgAdmin when connect data successfully
+![When execute script successfully](UsingPosgreSQL.png)
